@@ -1,0 +1,173 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/admin/check",
+      "mountPath": "/api/admin",
+      "method": "GET",
+      "module": [
+        "api/admin/check.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/admin/check",
+      "mountPath": "/api/admin",
+      "method": "POST",
+      "module": [
+        "api/admin/check.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/maps/:name",
+      "mountPath": "/api/maps",
+      "method": "DELETE",
+      "module": [
+        "api/maps/[name].js:onRequestDelete"
+      ]
+    },
+    {
+      "routePath": "/api/maps/:name",
+      "mountPath": "/api/maps",
+      "method": "GET",
+      "module": [
+        "api/maps/[name].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/personalities/:name",
+      "mountPath": "/api/personalities",
+      "method": "DELETE",
+      "module": [
+        "api/personalities/[name].js:onRequestDelete"
+      ]
+    },
+    {
+      "routePath": "/api/personalities/:name",
+      "mountPath": "/api/personalities",
+      "method": "GET",
+      "module": [
+        "api/personalities/[name].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/prompts/:name",
+      "mountPath": "/api/prompts",
+      "method": "DELETE",
+      "module": [
+        "api/prompts/[name].js:onRequestDelete"
+      ]
+    },
+    {
+      "routePath": "/api/prompts/:name",
+      "mountPath": "/api/prompts",
+      "method": "GET",
+      "module": [
+        "api/prompts/[name].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/sessions/:key",
+      "mountPath": "/api/sessions",
+      "method": "DELETE",
+      "module": [
+        "api/sessions/[key].js:onRequestDelete"
+      ]
+    },
+    {
+      "routePath": "/api/sessions/:key",
+      "mountPath": "/api/sessions",
+      "method": "GET",
+      "module": [
+        "api/sessions/[key].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/config",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/config.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/config",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/config.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/llm",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/llm.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/maps",
+      "mountPath": "/api/maps",
+      "method": "GET",
+      "module": [
+        "api/maps/index.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/maps",
+      "mountPath": "/api/maps",
+      "method": "POST",
+      "module": [
+        "api/maps/index.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/personalities",
+      "mountPath": "/api/personalities",
+      "method": "GET",
+      "module": [
+        "api/personalities/index.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/personalities",
+      "mountPath": "/api/personalities",
+      "method": "POST",
+      "module": [
+        "api/personalities/index.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/prompts",
+      "mountPath": "/api/prompts",
+      "method": "GET",
+      "module": [
+        "api/prompts/index.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/prompts",
+      "mountPath": "/api/prompts",
+      "method": "POST",
+      "module": [
+        "api/prompts/index.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/sessions",
+      "mountPath": "/api/sessions",
+      "method": "GET",
+      "module": [
+        "api/sessions/index.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/sessions",
+      "mountPath": "/api/sessions",
+      "method": "POST",
+      "module": [
+        "api/sessions/index.js:onRequestPost"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}

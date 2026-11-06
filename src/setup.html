@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cooked-llm — setup</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>cooked-llm — setup</h1>
+      <p class="hint">Configure the map, cooks and phases players get. Changes only go live after you publish.</p>
+
+      <section id="admin-gate" class="admin-gate">
+        <form id="admin-gate-form" class="admin-gate-form">
+          <label class="admin-gate-label">
+            Setup password
+            <input id="admin-password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Unlock</button>
+        </form>
+        <p id="admin-gate-error" class="admin-gate-error" hidden>Incorrect password.</p>
+      </section>
+
+      <div id="admin-content" class="admin-content" hidden>
+        <section class="publish-panel">
+          <p id="publish-live" class="hint">Loading current live config…</p>
+          <div class="publish-actions">
+            <button type="button" id="map-publish" class="map-publish">Publish to players</button>
+            <a class="link-button" href="/" target="_blank" rel="noreferrer">Open player page ↗</a>
+            <button type="button" id="admin-lock">Lock</button>
+          </div>
+          <p id="publish-status" class="publish-status" hidden></p>
+        </section>
+
+        <section class="panel">
+          <h2>Phases</h2>
+          <p class="hint">
+            The practice round is not scored. Players see a notice before each round, and the kitchen
+            is reset when a round starts. Set a duration to 0 to skip that round.
+          </p>
+          <div class="field-row">
+            <label>
+              Practice round
+              <input id="phase-train" type="number" min="0" max="7200" step="5" value="60" />
+              <span class="unit">seconds</span>
+            </label>
+            <label>
+              Scored round
+              <input id="phase-game" type="number" min="0" max="7200" step="5" value="180" />
+              <span class="unit">seconds</span>
+            </label>
+            <label class="checkbox-field">
+              <input id="phase-freeplay" type="checkbox" />
+              Free play afterwards (player ends it with a Stop button)
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Cooks</h2>
+          <p class="hint">
+            Each cook is played by a person at the keyboard or by Claude. Set both to Claude to watch
+            the model play itself, or disable the second cook for a solo kitchen.
+          </p>
+          <div class="cooks">
+            <fieldset class="cook-card">
+              <legend>Cook 1</legend>
+              <label>
+                Played by
+                <select id="p1-controller">
+                  <option value="human">Human</option>
+                  <option value="llm">Claude</option>
+                </select>
+              </label>
+              <div class="speed-row">
+                <label>
+                  Walk speed
+                  <input id="p1-walk-speed" type="number" min="0.1" max="10" step="0.1" value="1" />
+                </label>
+                <label>
+                  Cut speed
+                  <input id="p1-cut-speed" type="number" min="0.1" max="10" step="0.1" value="1" />
+                </label>
+              </div>
+              <div class="color-row">
+                <label>Skin<input id="p1-color-skin" type="color" value="#e3a691" /></label>
+                <label>Hair<input id="p1-color-hair" type="color" value="#ffc500" /></label>
+                <label>Mustache<input id="p1-color-mustache" type="color" value="#5a3a1a" /></label>
+                <label>Apron<input id="p1-color-apron" type="color" value="#0040ff" /></label>
+                <label>Hat<input id="p1-color-hat" type="color" value="#ffffff" /></label>
+              </div>
+              <label class="stack-field">
+                Claude personality (optional, only used while "Played by" is Claude)
+                <textarea
+                  id="p1-instructions"
+                  class="instructions-text"
+                  rows="3"
+                  spellcheck="false"
+                  placeholder="e.g. Only make tomato salads. Always let your teammate do the chopping."
+                ></textarea>
+              </label>
+              <label class="stack-field">
+                Personality schedule (optional)
+                <textarea
+                  id="p1-schedule"
+                  class="instructions-text"
+                  rows="3"
+                  spellcheck="false"
+                  placeholder="@90&#10;From now on, work faster and stop double-checking plates.&#10;&#10;@150&#10;Go back to normal."
+                ></textarea>
+              </label>
+              <div class="map-library personality-library">
+                <label class="map-name-field">
+                  Name
+                  <input id="p1-personality-name" type="text" class="map-name-input" placeholder="e.g. supportive-chopper" maxlength="64" />
+                </label>
+                <button type="button" id="p1-personality-save">Save</button>
+                <select id="p1-personality-select" class="map-select" aria-label="Saved personalities for cook 1"></select>
+                <button type="button" id="p1-personality-load">Load</button>
+                <button type="button" id="p1-personality-delete" class="map-delete">Delete</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="cook-card">
+              <legend>Cook 2</legend>
+              <label>
+                Played by
+                <select id="p2-controller">
+                  <option value="llm">Claude</option>
+                  <option value="human">Human</option>
+                  <option value="none">Disabled</option>
+                </select>
+              </label>
+              <div class="speed-row">
+                <label>
+                  Walk speed
+                  <input id="p2-walk-speed" type="number" min="0.1" max="10" step="0.1" value="1" />
+                </label>
+                <label>
+                  Cut speed
+                  <input id="p2-cut-speed" type="number" min="0.1" max="10" step="0.1" value="1" />
+                </label>
+              </div>
+              <div class="color-row">
+                <label>Skin<input id="p2-color-skin" type="color" value="#c98d6b" /></label>
+                <label>Hair<input id="p2-color-hair" type="color" value="#4a2c12" /></label>
+                <label>Mustache<input id="p2-color-mustache" type="color" value="#2b1a0a" /></label>
+                <label>Apron<input id="p2-color-apron" type="color" value="#c62828" /></label>
+                <label>Hat<input id="p2-color-hat" type="color" value="#ffffff" /></label>
+              </div>
+              <label class="stack-field">
+                Claude personality (optional, only used while "Played by" is Claude)
+                <textarea
+                  id="p2-instructions"
+                  class="instructions-text"
+                  rows="3"
+                  spellcheck="false"
+                  placeholder="e.g. Only make tomato salads. Always let your teammate do the chopping."
+                ></textarea>
+              </label>
+              <label class="stack-field">
+                Personality schedule (optional)
+                <textarea
+                  id="p2-schedule"
+                  class="instructions-text"
+                  rows="3"
+                  spellcheck="false"
+                  placeholder="@90&#10;From now on, work faster and stop double-checking plates.&#10;&#10;@150&#10;Go back to normal."
+                ></textarea>
+              </label>
+              <div class="map-library personality-library">
+                <label class="map-name-field">
+                  Name
+                  <input id="p2-personality-name" type="text" class="map-name-input" placeholder="e.g. fast-runner" maxlength="64" />
+                </label>
+                <button type="button" id="p2-personality-save">Save</button>
+                <select id="p2-personality-select" class="map-select" aria-label="Saved personalities for cook 2"></select>
+                <button type="button" id="p2-personality-load">Load</button>
+                <button type="button" id="p2-personality-delete" class="map-delete">Delete</button>
+              </div>
+            </fieldset>
+          </div>
+          <p class="hint">Walk speed is in tiles per tick; cut speed is a multiplier (1 ≈ 3s per chop). Each cook can be tuned independently, and both cooks — human or Claude — are told their own speed and their teammate's.</p>
+          <p class="hint">
+            Each cook's personality is independent — Claude cooks can be given completely different
+            instructions, or none at all. Save named personality + schedule presets per cook so
+            collaborators can load and compare them (like maps and rules prompts). Publishing copies
+            the current text to the live player config.
+          </p>
+          <p class="hint">
+            The schedule field optionally changes that cook's personality mid-round: one or more
+            <code>@seconds</code> lines, each followed by the new instructions text to switch to
+            once that many seconds of the round have passed. Timing restarts at 0 at the start of
+            every phase (so the same schedule replays fresh in the practice round and the scored
+            round).
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>Agent rules prompt</h2>
+          <p class="hint">
+            Block 1 of the Claude prompt — game rules, cooperation guidance and reply format. This is
+            cached and sent to every agent decision. Save named versions here so collaborators can
+            load, edit and compare prompts. Publishing copies the current text to the live player
+            config.
+          </p>
+          <div class="field-row map-library-row">
+            <label class="stack-field grow-field">
+              Prompt name
+              <input id="prompt-name" type="text" placeholder="e.g. spatial-v2" />
+            </label>
+            <label class="stack-field">
+              Saved prompts
+              <select id="prompt-select"></select>
+            </label>
+            <div class="map-actions">
+              <button type="button" id="prompt-save">Save</button>
+              <button type="button" id="prompt-load">Load</button>
+              <button type="button" id="prompt-delete" class="map-delete">Delete</button>
+              <button type="button" id="prompt-reset">Reset to built-in</button>
+            </div>
+          </div>
+          <textarea
+            id="prompt-rules-text"
+            class="rules-text"
+            rows="18"
+            spellcheck="false"
+          ></textarea>
+        </section>
+
+        <section class="panel">
+          <h2>Claude agent</h2>
+          <p class="hint">
+            Block 2 (kitchen layout + per-cook personality) and block 3 (live state + action list) are
+            built automatically each turn. Personality/instructions are set per cook above.
+            Claude is asked for a decision each time its cook finishes an action, and it can only
+            choose from actions that are actually possible — so it cannot make an invalid or
+            pointless move.
+          </p>
+          <div class="field-row">
+            <label>
+              Model
+              <input id="llm-model" type="text" class="wide-input" value="claude-haiku-4-5-20251001" />
+            </label>
+            <label>
+              Pause between decisions
+              <input id="llm-cooldown" type="number" min="0" max="30000" step="100" value="400" />
+              <span class="unit">ms</span>
+            </label>
+            <label>
+              Max output
+              <input id="llm-max-tokens" type="number" min="64" max="4096" step="64" value="512" />
+              <span class="unit">tokens</span>
+            </label>
+            <label class="checkbox">
+              <input id="llm-include-reasoning" type="checkbox" />
+              Ask for reasoning in the reply
+              <span class="hint">Off by default — Haiku is faster when it only returns `{"action": N}`.</span>
+            </label>
+          </div>
+
+          <details class="prompt-inspector">
+            <summary>Inspect the exact prompt &amp; test one turn</summary>
+            <div class="publish-actions">
+              <label>
+                Preview as
+                <select id="llm-preview-player">
+                  <option value="p1">Cook 1</option>
+                  <option value="p2">Cook 2</option>
+                </select>
+              </label>
+              <button type="button" id="llm-refresh-prompt">Refresh preview</button>
+              <button type="button" id="llm-test-turn">Send one test turn</button>
+            </div>
+            <p id="llm-test-status" class="hint"></p>
+            <p class="map-pane-label">Cached block 1 — rules</p>
+            <pre id="llm-prompt-rules" class="prompt-block"></pre>
+            <p class="map-pane-label">Cached block 2 — this kitchen &amp; your instructions</p>
+            <pre id="llm-prompt-kitchen" class="prompt-block"></pre>
+            <p class="map-pane-label">Per-turn message — live game state</p>
+            <pre id="llm-prompt-state" class="prompt-block"></pre>
+            <p class="map-pane-label">Model reply</p>
+            <pre id="llm-reply" class="prompt-block"></pre>
+          </details>
+        </section>
+
+        <section id="map-editor" class="map-editor panel">
+          <h2>Map editor</h2>
+          <p class="hint">One letter per tile. Keep every row the same width. Preview updates as you type.</p>
+          <div id="legend" class="legend-panel legend-inline">
+            <h3 class="legend-heading">Tile characters</h3>
+            <ul id="legend-list" class="legend-list">
+              <li class="legend-item" title=". — floor"><span class="legend-char">.</span><span class="legend-label">floor</span></li>
+              <li class="legend-item" title="# — wall"><span class="legend-char">#</span><span class="legend-label">wall</span></li>
+              <li class="legend-item" title="C — counter"><span class="legend-char">C</span><span class="legend-label">counter</span></li>
+              <li class="legend-item" title="B — cutting board"><span class="legend-char">B</span><span class="legend-label">cutting board</span></li>
+              <li class="legend-item" title="T — tomato dispenser"><span class="legend-char">T</span><span class="legend-label">tomato dispenser</span></li>
+              <li class="legend-item" title="P — pumpkin dispenser"><span class="legend-char">P</span><span class="legend-label">pumpkin dispenser</span></li>
+              <li class="legend-item" title="L — plate dispenser"><span class="legend-char">L</span><span class="legend-label">plate dispenser</span></li>
+              <li class="legend-item" title="X — trash"><span class="legend-char">X</span><span class="legend-label">trash</span></li>
+              <li class="legend-item" title="D — delivery"><span class="legend-char">D</span><span class="legend-label">delivery</span></li>
+            </ul>
+          </div>
+          <div class="map-editor-split">
+            <div class="map-text-pane">
+              <p class="map-pane-label">Text</p>
+              <textarea id="map-text" class="map-text" spellcheck="false" aria-label="Map text">###############
+#T......C....P#
+#L....X.......#
+#....B........#
+#.............#
+#...C..D..C...#
+#.............#
+#.............#
+###############</textarea>
+            </div>
+            <div class="map-preview-pane">
+              <p class="map-pane-label">Live preview</p>
+              <canvas id="map-preview" class="map-preview" width="480" height="288" aria-label="Live map preview"></canvas>
+            </div>
+          </div>
+          <div class="map-library">
+            <label class="map-name-field">
+              Name
+              <input id="map-name" type="text" class="map-name-input" placeholder="My kitchen" maxlength="64" />
+            </label>
+            <button type="button" id="map-save">Save</button>
+            <select id="map-select" class="map-select" aria-label="Saved maps"></select>
+            <button type="button" id="map-load">Load</button>
+            <button type="button" id="map-delete" class="map-delete">Delete</button>
+          </div>
+          <div class="map-actions">
+            <button type="button" id="map-apply">Apply to test game</button>
+            <button type="button" id="map-reset">Reset to default</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Test game</h2>
+          <p class="hint">
+            Plays locally in your browser and is never logged. Claude cooks stay idle here unless you
+            let them run, so previewing a map costs nothing.
+          </p>
+          <div class="field-row">
+            <label class="checkbox-field">
+              <input id="test-run-llm" type="checkbox" />
+              Let Claude cooks play the test game (uses API credits)
+            </label>
+            <button type="button" id="test-restart">Restart test game</button>
+          </div>
+          <p id="score" class="score">Delivered: 0</p>
+          <div id="viewport" class="viewport">
+            <canvas id="game"></canvas>
+          </div>
+          <p class="map-pane-label">Claude activity in the test game</p>
+          <pre id="test-llm-log" class="prompt-block"></pre>
+        </section>
+
+        <section class="panel">
+          <h2>Recorded sessions</h2>
+          <p class="hint">Every visit to the player page is stored with its map, speeds, prompt and full action log.</p>
+          <div class="publish-actions">
+            <button type="button" id="sessions-refresh">Refresh</button>
+          </div>
+          <div id="sessions-list" class="sessions-list"></div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/setup.js"></script>
+  </body>
+</html>

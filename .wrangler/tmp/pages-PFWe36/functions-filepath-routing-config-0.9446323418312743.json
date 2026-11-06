@@ -1,0 +1,69 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/admin/check",
+      "mountPath": "/api/admin",
+      "method": "POST",
+      "module": [
+        "api/admin/check.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/maps/:name",
+      "mountPath": "/api/maps",
+      "method": "DELETE",
+      "module": [
+        "api/maps/[name].js:onRequestDelete"
+      ]
+    },
+    {
+      "routePath": "/api/maps/:name",
+      "mountPath": "/api/maps",
+      "method": "GET",
+      "module": [
+        "api/maps/[name].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/config",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/config.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/config",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/config.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/llm",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/llm.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/maps",
+      "mountPath": "/api/maps",
+      "method": "GET",
+      "module": [
+        "api/maps/index.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/maps",
+      "mountPath": "/api/maps",
+      "method": "POST",
+      "module": [
+        "api/maps/index.js:onRequestPost"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}

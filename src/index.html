@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cooked-llm</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="play-page">
+    <main class="play-main">
+      <header class="play-header">
+        <div class="hud">
+          <div class="score-badge" aria-label="Score">
+            <img
+              src="/sprites/world/item-on-counter.png"
+              class="score-icon"
+              width="20"
+              height="20"
+              alt=""
+            />
+            <span class="score-label">Score</span>
+            <span id="score-value" class="score-value">0</span>
+            <span id="score-title" class="score-title">Kitchen Trainee</span>
+          </div>
+
+          <div class="hud-meta">
+            <p id="phase-label" class="phase-label">Loading…</p>
+            <p id="timer" class="timer"></p>
+            <button type="button" id="stop-play" class="stop-play" hidden>Stop playing</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="game-stage">
+        <div class="game-panel">
+          <p id="control-hint" class="hint play-hint" hidden></p>
+          <div id="viewport" class="viewport">
+            <canvas id="game"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div id="overlay" class="overlay" hidden>
+        <div class="overlay-card">
+          <h2 id="overlay-title"></h2>
+          <p id="overlay-body"></p>
+          <div id="overlay-summary" class="overlay-summary" hidden></div>
+          <button type="button" id="overlay-cta" class="overlay-cta"></button>
+          <p id="overlay-note" class="overlay-note" hidden></p>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/play.js"></script>
+  </body>
+</html>
